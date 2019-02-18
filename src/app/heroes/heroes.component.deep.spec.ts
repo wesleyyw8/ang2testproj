@@ -37,7 +37,12 @@ describe('HeroesComponent (deep tests)', () => {
     fixture = TestBed.createComponent(HeroesComponent);
   });
 
-  it('should be true', () => {
-    expect(true).toBe(true);
+  it('should render each hero as HeroComponent', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
+
+    const heroComponentsDEs = fixture.debugElement.queryAll(By.directive(HeroComponent));
+    expect(heroComponentsDEs.length).toEqual(3);
+    expect(heroComponentsDEs[0].componentInstance.hero.name).toEqual('SpiderDude');
   })
 });
